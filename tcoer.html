@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TCOER Smart Campus Guide</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,Arial}
+body{background:#f4f7fb;color:#333}
+header{background:#0b3c91;color:white;padding:15px 30px;display:flex;justify-content:space-between;position:sticky;top:0}
+nav a{color:white;margin-left:15px;text-decoration:none}
+.hero{height:300px;background:linear-gradient(rgba(11,60,145,.7),rgba(11,60,145,.7)),url("https://image-static.collegedunia.com/public/reviewPhotos/1045218/IMG-20250121-WA0000.jpg");background-size:cover;display:flex;align-items:center;justify-content:center;color:white;text-align:center}
+section{padding:50px 20px;max-width:1100px;margin:auto}
+h3{text-align:center;color:#0b3c91;margin-bottom:20px}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.card{background:white;padding:20px;border-radius:15px;box-shadow:0 6px 15px rgba(0,0,0,.1);text-align:center}
+input,button{padding:10px 15px;border-radius:20px;border:1px solid #ccc;margin:5px;cursor:pointer}
+footer{background:#0b3c91;color:white;text-align:center;padding:15px}
+li{cursor:pointer;padding:8px}
+li:hover{background:#e8efff}
+.qr img{width:100px;margin-top:10px}
+#dept{display:none}
+
+/* chatbot */
+#chatbot{position:fixed;bottom:20px;right:20px;width:280px;background:white;border-radius:15px;box-shadow:0 6px 20px rgba(0,0,0,.2)}
+#chat-header{background:#0b3c91;color:white;padding:10px;text-align:center}
+#chat-body{height:180px;overflow-y:auto;padding:10px;font-size:14px}
+#chat-input{width:100%;border:none;padding:10px}
+.user{text-align:right;color:#0b3c91;margin:5px}
+.bot{text-align:left;margin:5px}
+</style>
+</head>
+
+<body>
+
+<header>
+<h2>TCOER Smart Campus Guide</h2>
+<nav>
+<a href="#search">Search</a>
+<a href="#map">Map</a>
+<a href="#dept" onclick="openComputerDept()">Department</a>
+</nav>
+</header>
+
+<div class="hero">
+<div>
+<h1>Welcome to TCOER</h1>
+<p>Smart navigation for smart students</p>
+</div>
+</div>
+
+<section id="search">
+<h3>🔍 Search Campus</h3>
+<input type="text" id="searchInput" placeholder="Search campus..." onkeyup="searchCampus()">
+<ul id="campusList">
+<li onclick="openComputerDept()">💻 Computer Engineering Department</li>
+<li>Administrative Office</li>
+<li>Main Auditorium</li>
+<li>Canteen & Food Court</li>
+<li>Hostel & Parking Area</li>
+</ul>
+</section>
+
+<section id="map">
+<h3>🗺️ Quick Map Navigation</h3>
+<button onclick="openComputerDept()">💻 Computer Dept</button>
+<button onclick="loadMap('canteen')">🍽️ Canteen</button>
+<button onclick="loadMap('hostel')">🏠 Hostel</button>
+
+<iframe id="mapFrame" width="100%" height="400"
+src="https://www.google.com/maps?q=TCOER%20college&output=embed"
+style="border:0;border-radius:15px;margin-top:10px"></iframe>
+</section>
+
+<section id="dept">
+<h3>💻 Computer Engineering Department</h3>
+<div class="card-grid">
+<div class="card">
+<h4>📘 Classrooms</h4>
+<p>Room E301 – classroom<br>Room E302 – classroom <br>Room E303 – classroom</p>
+</div>
+<div class="card">
+<h4>🔬 Labs</h4>
+<p>CL-I Lab - (E304)<br>CL-II Lab - (E305) <br>Hardware/Project Lab-(E306)<br>CL-III Lab-(E307) <br> CL-IV Lab-(E310) <br> CL-V Lab-(E311)<br> CL-VI-(E312) <br> CL-VII/PG Lab-(E315)</p>
+</div>
+<div class="card">
+<h4>👨‍🏫 Faculty</h4>
+<p>
+Dr.Geetika Narang (HOD)<br>
+Dr.Sujeet More<br>
+Mrs.Sneha Tirth<br>
+Mrs.Manisha R Patil<br>
+Mrs.Rupali Maske<br>
+Mrs.Jareena Shaikh<br>
+Mr.Prasad Bhosle<br>
+Mrs.Snehal Mahindrakar<br>
+Mrs.Samreen Shaikh<br>
+Mrs.Saminabano Shaikh<br>
+Mrs.Swati Mohite<br>
+Mrs.Gauri Gunjal<br>
+Mr. Vishal Shinde
+</p>
+</div>
+</div>
+</section>
+
+<footer>© 2026 TCOER Smart Campus Guide</footer>
+
+<!-- CHATBOT -->
+<div id="chatbot">
+<div id="chat-header">🤖 Campus Assistant</div>
+<div id="chat-body"></div>
+<input id="chat-input" placeholder="Ask me anything..." onkeypress="handleChat(event)">
+</div>
+
+<script>
+function searchCampus(){
+let input=document.getElementById("searchInput").value.toLowerCase();
+document.querySelectorAll("#campusList li").forEach(i=>{
+i.style.display=i.innerText.toLowerCase().includes(input)?"block":"none";
+});
+}
+
+function loadMap(place){
+let urls={
+canteen:"https://maps.app.goo.gl/sgDjWSiANYYCikQEA",
+hostel:"https://maps.app.goo.gl/8utE6yTVBUt1ds1D9"
+};
+document.getElementById("mapFrame").src=urls[place];
+}
+
+function openComputerDept(){
+document.getElementById("dept").style.display="block";
+document.getElementById("dept").scrollIntoView({behavior:"smooth"});
+document.getElementById("mapFrame").src="https://www.google.com/maps?q=TCOER%20Computer%20Department&output=embed";
+}
+
+function handleChat(e){
+if(e.key==="Enter"){
+  let input=document.getElementById("chat-input");
+  let msg=input.value.trim();
+  if(msg==="") return;
+
+  let body=document.getElementById("chat-body");
+  let u=document.createElement("div");
+  u.className="user";
+  u.textContent=input.value;
+  body.appendChild(u);
+
+  let r="🤖 Ask me about faculty, HOD, labs, canteen, hostel or maps.";
+
+  const faculty = [
+    { name: "sujeet", cabin: "E-315", info: "Dr. Sujeet More | Ph.D.comp | 13 Years Experience | Cabin-E315" },
+    { name: "sneha", cabin: "E-311", info: "Mrs.Sneha Tirth | Ph.D.Pursu | 15 Years Experience | Cabin-E311/CL-V" },
+    { name: "manisha", cabin: "E-311", info: "Mrs.Manisha Patil | M.E.comp | 25 Years Experience | Cabin-E311/CL-V" },
+    { name: "rupali", cabin: "E-304", info: "Mrs.Rupali Maske | Ph.D.pursu | 16 Years Experience | Cabin-E304/CL-I" },
+    { name: "vishal", cabin: "E-312", info: "Mr.Vishal Shinde | M.E.comp | 5 Years Experience | Cabin-E312/CL-VI" },
+    { name: "jareena", cabin: "E-307A", info: "Mrs.Jareena Shaikh | M.E.comp | 16 Years Experience | Cabin-E307A/CL-III" },
+    { name: "rutika", cabin: "E-307A", info: "Mrs.Rutika Shah | M.E.comp | 5 Years Experience | Cabin-E307A/CL-III" },
+    { name: "swati", cabin: "E-307A", info: "Mrs.Swati Mohite | M.E.comp | 7 Years Experience | Cabin-E307A/CL-III" },
+    { name: "sai", cabin: "E-316B", info: "Mrs.Sai Takawale | M.E.comp | 3 Years Experience | Cabin-E316B/Depart.Libray" },
+    { name: "saminabano", cabin: "E-304", info: "Mrs.Saminabano Shaikh | M.E.comp | 7 Years Experience | Cabin-E304/CL-I" },
+    { name: "samrin", cabin: "E-312", info: "Mrs.Samrin Shaikh | M.E.comp | 5 Years Experience | Cabin-E312/CL-VI" },
+    { name: "harshda", cabin: "E-306", info: "Mrs.Harshda Raghuwanshi | M.E.comp | 2 Years Experience | Cabin-E306/Hardware lab" },
+    { name: "snehal", cabin: "E-316", info: "Mrs.Snehal Mahindrakar | M.E.pursu | 7 Years Experience | Cabin-E316" }
+  ];
+
+  let msgLower = msg.toLowerCase();
+
+  for(let f of faculty){
+    if(msgLower.includes(f.name.toLowerCase()) || msg.toUpperCase().includes(f.cabin)){
+      r = f.info;
+      break;
+    }
+  }
+
+  // default messages if no faculty match
+  if(r==="🤖 Ask me about faculty, HOD, labs, canteen, hostel or maps."){
+    if(msgLower.includes("hi") || msgLower.includes("hello")) r="Hello 👋 How can I help you?";
+    else if(msgLower.includes("hod")) r="👨‍🏫 HOD: Dr. Geetika Narang | Ph.D.comp | 17 Years Experience | Cabin-E316";
+    else if(msgLower.includes("faculty")) r="👩‍🏫 Faculty: Dr. Geetika Narang, Dr. Sujeet More, Mrs. Sneha Tirth, Mrs. Manisha Patil, Mrs. Rupali Maske, Mr. Vishal Shinde, Mrs.Jareena Shaikh, Mr.Prasad Bhosale, Mrs.Rutika Shah, Mrs.Swati Mohite, Mrs.Sai Takawale, Mrs.Saminabano Shaikh, Mrs.Samrin Shaikh, Mrs.Harshda Raghuwanshi.";
+    else if(msgLower.includes("lab")) r="CL-I Lab - (E304), CL-II Lab - (E305), Hardware/Project Lab-(E306), CL-III Lab-(E307), CL-IV Lab-(E310), CL-V Lab-(E311), CL-VI-(E312), CL-VII/PG Lab-(E315)";
+    else if(msgLower.includes("canteen")){
+      r="🍽️ There are Three canteens in campus: 1.Aanna Mess, 2.Kj Canteen, 3. Pool Side Canteen. Opening map...";
+      document.getElementById("mapFrame").src="https://www.google.com/maps?q=TCOER%20Canteen&output=embed";
+    }
+    else if(msgLower.includes("hostel")){
+      r="🏠 Next to Swimming Pool. Opening map...";
+      document.getElementById("mapFrame").src="https://www.google.com/maps?q=TCOER%20Hostel&output=embed";
+    }
+  }
+
+  let b=document.createElement("div");
+  b.className="bot";
+  b.textContent=r;
+  body.appendChild(b);
+
+  body.scrollTop=body.scrollHeight;
+  input.value="";
+}
+}
+
+</script>
+
+</body>
+</html>
